@@ -11,12 +11,12 @@
 11.Frames()-----------------------C
 12.Robot()------------------------C
 13.Window handles()---------------C
-14.Drop down ()
+14.Drop down ()-------------------C
 15.Check box()
-16.Is enable()
-17.Is displayed()
-18.Is selected()
-19.Get options()
+16.Is enable()--------------------C
+17.Is displayed()-----------------C
+18.Is selected()------------------C
+19.Get options()------------------C
 20.Get title()---------------------C
 21.Get current url()---------------C
 22.Get text()----------------------C
@@ -25,8 +25,8 @@
 25.Take screenshot()
 26.Scroll up and down()------------C
 27.Sendkeys()----------------------C
-28.Get first selected options()
-29.Get all selected options()
-30.Is multiple()
+28.Get first selected options()----C
+29.Get all selected options()------C
+30.Is multiple()-N
 31.Click()-------------------------C
-32.RadioButton()
+32.RadioButton()-------------------C

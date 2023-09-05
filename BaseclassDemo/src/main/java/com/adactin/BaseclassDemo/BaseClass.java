@@ -1,13 +1,15 @@
 package com.adactin.BaseclassDemo;
 
 import java.awt.AWTException;
+import java.awt.Checkbox;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.time.Duration;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
-
+import java.util.List;
+import org.apache.commons.io.FileSystemUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -15,6 +17,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.interactions.Actions;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -111,9 +114,7 @@ public class BaseClass {
 
 	// Method creation for handling Js Alerts
 	public static void alertPopUp() {
-
 		driver.switchTo().alert().accept();
-
 	}
 
 	// Method creation for Navigate To
@@ -178,18 +179,22 @@ public class BaseClass {
 		robot.keyRelease(KeyEvent.VK_ENTER);
 	}
 
+	// Method creation for JavaScript executor-up
 	public static void pageUp() {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("window.scrollBy(0,-500)");
 	}
 
+	// Method creation for JavaScript executor-down
 	public static void pageDown() {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("window.scrollBy(0,1000)");
 	}
+
+	// Method creation for JavaScript executor-View of Element
 	public static void scrollIntoView(WebElement element) {
-	    JavascriptExecutor js = (JavascriptExecutor) driver;
-	    js.executeScript("arguments[0].scrollIntoView();", element);
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("arguments[0].scrollIntoView();", element);
 	}
 
 	// Method creation for windows handling Using FOR-Each to get the title of the
@@ -215,17 +220,106 @@ public class BaseClass {
 			}
 		}
 	}
+
 	// Method creation for windows handling Using ITERATION to get the desired TAB
 	public static void iterationWidowHandling() {
 		String homeTab = driver.getWindowHandle();//// Storing the current window in a Variable
 		Set<String> windowHandels = driver.getWindowHandles();// Storing all window handels
 		Iterator<String> childTab = windowHandels.iterator();// Now iterate using Iterator
-		while (childTab.hasNext()){
+		while (childTab.hasNext()) {
 			String selenium = childTab.next();
 			String title = "WebDriver | Selenium";
-			if(driver.switchTo().window(selenium).getTitle().contains(title)) {
+			if (driver.switchTo().window(selenium).getTitle().contains(title)) {
 				break;
 			}
 		}
+	}
+
+	// Method Creation for the radio Btn
+	public static void clickRadoiBtn(WebElement ele) {
+		ele.click();
+	}
+
+	// Method Creation for the radio Btn Status-isSelected
+	public static void radoiBtnStatus(WebElement ele) {
+		boolean selected = ele.isSelected();
+		if (selected) {
+			System.out.println("Button not selected");
+		} else {
+			System.out.println("Button is selected");
+		}
+	}
+
+	// Method Creation for the radio Btn Status-Enabled
+	public static void radoiBtnEnabled(WebElement ele) {
+		boolean enabled = ele.isEnabled();
+		if (enabled) {
+			System.out.println("Button is enabled");
+		} else {
+			System.out.println("Button not enabled");
+		}
+	}
+
+	// Method Creation for the radio Btn Status-Displayed
+	public static void radoiBtndisplayed(WebElement ele) {
+		boolean display = ele.isDisplayed();
+		if (display) {
+			System.out.println("Button is display");
+		} else {
+			System.out.println("Button not display");
+		}
+	}
+
+	// Method Creation to handel dropdown
+	public static void dropDown(WebElement element, String Option, String value) {
+		Select sc = new Select(element);
+
+		if (Option.equalsIgnoreCase("byIndex")) {
+			int parseInt = Integer.parseInt(value);
+			sc.selectByIndex(parseInt);
+		} else if (Option.equalsIgnoreCase("byValue")) {
+			sc.selectByValue(value);
+		} else if (Option.equalsIgnoreCase("byVisibleText")) {
+			sc.selectByVisibleText(value);
+		} else {
+			System.out.println("Invalid option");
+		}
+	}
+
+	// Method Creation to handel dropdown
+	public static void dropDownOption(WebElement ele) {
+		Select dropOptions = new Select(ele);
+
+		List<WebElement> options = dropOptions.getOptions();
+
+		for (WebElement option : options) {
+			System.out.println(option.getText());
+		}
+
+	}
+
+	// Method Creation to get firstSelectedOption from dropdown-Note which retrieve
+	// the option we select
+	public static WebElement dropDownFirstOption(WebElement ele) {
+		Select firstOptions = new Select(ele);
+		WebElement firstSelectedOption = firstOptions.getFirstSelectedOption();
+		String first = firstSelectedOption.getText();
+		System.out.println(first);
+		return firstSelectedOption;
+	}
+
+	// Method Creation to get Get all selected options from dropdown-It retrieves
+	// the all the selected options
+	public static void dropDownAllOption(WebElement ele) {
+		Select allOptions = new Select(ele);
+		List<WebElement> allTheOptions = allOptions.getAllSelectedOptions();
+		for (WebElement all : allTheOptions) {
+			System.out.println(all.getText());
+		}
+	}
+
+	// Method creation for checkbox
+	public static void checkBoxHandle(WebElement ele) {
+		ele.click();
 	}
 }
