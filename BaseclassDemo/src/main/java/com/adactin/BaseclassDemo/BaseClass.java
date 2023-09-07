@@ -280,7 +280,7 @@ public class BaseClass {
 		Select sc = new Select(element);
 
 		if (Option.equalsIgnoreCase("byIndex")) {
-			int parseInt = Integer.parseInt(value);
+			int parseInt = Integer.parseInt(value);//Value is by default 'String' in the webpage so it is converted into the 'Integer' 
 			sc.selectByIndex(parseInt);
 		} else if (Option.equalsIgnoreCase("byValue")) {
 			sc.selectByValue(value);

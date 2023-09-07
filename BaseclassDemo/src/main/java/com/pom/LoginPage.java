@@ -6,7 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class LoginPage {
-	public static WebDriver driver;//WebDriver of the LoginPage class,By default it is Null
+	public static WebDriver driver;//WebDriver of the LoginPage class,By initially it is Null
 	
 	//Inspected WebElement of the WEB PAGE and it is stored in a variable
 	@FindBy(id = "username")
