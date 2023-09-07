@@ -1,6 +1,7 @@
 package com.adactin.BaseclassDemo;
 
 import java.awt.AWTException;
+import java.io.IOException;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -15,7 +16,7 @@ public class T extends BaseClass {
 
 	public static WebDriver driver;
 
-	public static void main(String[] args) throws AWTException, InterruptedException {
+	public static void main(String[] args) throws AWTException, InterruptedException, IOException {
 		driver = browserLauncher("Chrome");// Browser Launch
 //
 //		driver = getUrl("https://www.selenium.dev/");// Navigate to the URL
@@ -138,7 +139,7 @@ public class T extends BaseClass {
 		driver = getUrl("https://www.ironspider.ca/forms/checkradio.htm");// Navigate to the URL
 		WebElement checkBox = driver.findElement(By.xpath("(//input[contains(@name,'color')])[1]"));
 		checkBoxHandle(checkBox);
-		
+		 screenshot("C:\\Users\\user\\Documents");
 		//To JS Alert 
 		//Navigate to the application
 //		driver.get("https://www.onlinesbi.sbi/");

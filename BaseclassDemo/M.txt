@@ -12,7 +12,7 @@
 12.Robot()------------------------C
 13.Window handles()---------------C
 14.Drop down ()-------------------C
-15.Check box()
+15.Check box()--------------------C
 16.Is enable()--------------------C
 17.Is displayed()-----------------C
 18.Is selected()------------------C
@@ -22,7 +22,7 @@
 22.Get text()----------------------C
 23.Get attribute()-----------------C
 24.Wait()--------------------------C
-25.Take screenshot()
+25.Take screenshot()---------------C
 26.Scroll up and down()------------C
 27.Sendkeys()----------------------C
 28.Get first selected options()----C

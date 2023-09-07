@@ -4,14 +4,19 @@ import java.awt.AWTException;
 import java.awt.Checkbox;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.List;
 import org.apache.commons.io.FileSystemUtils;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -321,5 +326,13 @@ public class BaseClass {
 	// Method creation for checkbox
 	public static void checkBoxHandle(WebElement ele) {
 		ele.click();
+	}
+	//MethodCreation For taking Screenshot
+	public static void screenshot(String path) throws IOException {
+		TakesScreenshot ts = (TakesScreenshot) driver;
+		File sourceFile = ts.getScreenshotAs(OutputType.FILE);
+		File destinateFile = new File(path);
+		FileUtils.copyFileToDirectory(sourceFile, destinateFile);
+
 	}
 }
