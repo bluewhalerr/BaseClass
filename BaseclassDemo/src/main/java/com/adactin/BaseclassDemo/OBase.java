@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +27,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -44,6 +46,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class OBase {
 	public static WebDriver driver;
+	private static Workbook wb;
+	private String cId;
 
 	public static WebDriver browerLaunch(String browerName) throws Exception {
 
@@ -135,9 +139,9 @@ public class OBase {
 		}
 	}
 
-	public static void waituntilElementVisibility(WebElement element) {
+	public static void waituntilElementVisibility(int timeDuration,WebElement element) {
 		try {
-			WebDriverWait wb = new WebDriverWait(driver, 50);
+			WebDriverWait wb = new WebDriverWait(driver, Duration.ofSeconds(timeDuration));
 			wb.until(ExpectedConditions.visibilityOf(element));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -148,7 +152,7 @@ public class OBase {
 
 	public static void elementClear(WebElement element) {
 		try {
-			waituntilElementVisibility(element);
+			waituntilElementVisibility(30, element);
 			if (elementDisplayed(element) && elementEnabled(element)) {
 				element.clear();
 
@@ -163,7 +167,7 @@ public class OBase {
 
 	public static void inputValuestoElement(WebElement element, String value) {
 		try {
-			waituntilElementVisibility(element);
+			waituntilElementVisibility(30, element);
 			if (elementDisplayed(element) && elementEnabled(element)) {
 				elementClear(element);
 				element.sendKeys(value);
@@ -179,7 +183,7 @@ public class OBase {
 
 	public static void inputValuestoElement1(WebElement element, String value) {
 		try {
-			waituntilElementVisibility(element);
+			waituntilElementVisibility(30, element);
 			if (elementDisplayed(element) && elementEnabled(element)) {
 				element.sendKeys(value);
 			}
@@ -221,7 +225,7 @@ public class OBase {
 
 	public static String getElementText(WebElement element) {
 		try {
-			waituntilElementVisibility(element);
+			waituntilElementVisibility(30, element);
 			String text = element.getText();
 			return text;
 		} catch (Exception e) {
@@ -234,7 +238,7 @@ public class OBase {
 
 	public static String getElementTextAttribute(WebElement element) {
 		try {
-			waituntilElementVisibility(element);
+			waituntilElementVisibility(30, element);
 			String attribute = element.getAttribute("value");
 			return attribute;
 		} catch (Exception e) {
@@ -278,11 +282,10 @@ public class OBase {
 
 	public static void movetoElement(WebElement element) {
 		try {
-			waituntilElementVisibility(element);
+			waituntilElementVisibility(30, element);
 			Actions ac = new Actions(driver);
 			ac.moveToElement(element).build().perform();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new RuntimeException();
 
@@ -291,7 +294,7 @@ public class OBase {
 
 	public void dragAndDrop(WebElement source, WebElement target) {
 		try {
-			waituntilElementVisibility(source);
+			waituntilElementVisibility(30, source);
 			Actions ac = new Actions(driver);
 			ac.dragAndDrop(source, target).build().perform();
 		} catch (Exception e) {
@@ -304,7 +307,7 @@ public class OBase {
 
 	public static void doubleClick(WebElement element) {
 		try {
-			waituntilElementVisibility(element);
+			waituntilElementVisibility(30, element);
 			Actions ac = new Actions(driver);
 			ac.doubleClick(element).build().perform();
 		} catch (Exception e) {
@@ -317,7 +320,7 @@ public class OBase {
 
 	public static void contextClick(WebElement element) {
 		try {
-			waituntilElementVisibility(element);
+			waituntilElementVisibility(30, element);
 			Actions ac = new Actions(driver);
 			ac.contextClick(element).build().perform();
 		} catch (Exception e) {
@@ -403,19 +406,18 @@ public class OBase {
 		}
 	}
 
-	public static void waitforAlertISPresent() {
+	public static void waitforAlertISPresent(int timeDuration) {
 		try {
-			WebDriverWait wb = new WebDriverWait(driver, 50);
+			WebDriverWait wb = new WebDriverWait(driver, Duration.ofSeconds(timeDuration));
 			wb.until(ExpectedConditions.alertIsPresent());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	public static void simpleAlert() {
 		try {
-			waitforAlertISPresent();
+			waitforAlertISPresent(0);
 			Alert alert = driver.switchTo().alert();
 			alert.accept();
 		} catch (Exception e) {
@@ -426,9 +428,9 @@ public class OBase {
 		}
 	}
 
-	public static void confirmAlert(String option) {
+	public static void confirmAlert(String option,int dura) {
 		try {
-			waitforAlertISPresent();
+			waitforAlertISPresent(0);
 			Alert alert = driver.switchTo().alert();
 			if (option.equalsIgnoreCase("confirm")) {
 				alert.accept();
@@ -445,7 +447,7 @@ public class OBase {
 
 	public static void promptAlert(String options, String values) {
 		try {
-			waitforAlertISPresent();
+			waitforAlertISPresent(30);
 			Alert alert = driver.switchTo().alert();
 			if (options.equalsIgnoreCase("confirm")) {
 				alert.sendKeys(values);
@@ -529,7 +531,7 @@ public class OBase {
 
 	public void switchtoMultipleWindow(int index) {
 		try {
-			String cId = driver.getWindowHandle();
+			cId = driver.getWindowHandle();
 			Set<String> pId = driver.getWindowHandles();
 			List<String> li = new ArrayList<String>();
 			li.addAll(pId);
@@ -562,7 +564,7 @@ public class OBase {
 		try {
 			File f = new File(System.getProperty("user.dir") + "\\Datas\\TestConfiguration.xlsx");
 			FileInputStream fin = new FileInputStream(f);
-			Workbook wb = new XSSFWorkbook(fin);
+			wb = new XSSFWorkbook(fin);
 			Sheet sheet = wb.getSheet(sheetname);
 			Cell cell = sheet.getRow(rownum).getCell(cellnum);
 			CellType cellType = cell.getCellType();
@@ -594,7 +596,7 @@ public class OBase {
 		try {
 			File f = new File(System.getProperty("user.dir") + "\\Multiple Datas Run\\MultipleData.xlsx");
 			FileInputStream fin = new FileInputStream(f);
-			Workbook wb = new XSSFWorkbook(fin);
+			 wb = new XSSFWorkbook(fin);
 			Sheet sheet = wb.getSheet(sheetname);
 			Cell cell = sheet.getRow(rownum).getCell(cellnum);
 			CellType cellType = cell.getCellType();
@@ -621,7 +623,7 @@ public class OBase {
 		try {
 			File f = new File(System.getProperty("user.dir") + "\\Multiple Datas Run\\MultipleData.xlsx");
 			FileInputStream fin = new FileInputStream(f);
-			Workbook wb = new XSSFWorkbook(fin);
+			wb = new XSSFWorkbook(fin);
 			Sheet sheet = wb.getSheet(sheetname);
 			Cell cell = sheet.getRow(rownum).getCell(cellnum);
 			CellType cellType = cell.getCellType();
@@ -648,7 +650,7 @@ public class OBase {
 		try {
 			File f = new File(System.getProperty("user.dir") + "eclipse-workspace\\CP\\Datas\\Skills.csv");
 			FileInputStream fin = new FileInputStream(f);
-			Workbook wb = new XSSFWorkbook(fin);
+			wb = new XSSFWorkbook(fin);
 			Sheet sheet = wb.getSheet(sheetname);
 			Cell cell = sheet.getRow(rownum).getCell(cellnum);
 			CellType cellType = cell.getCellType();
@@ -675,7 +677,7 @@ public class OBase {
 		try {
 			File f = new File(System.getProperty("user.dir") + "\\Datas\\" + fileName + ".xlsx");
 			FileInputStream fin = new FileInputStream(f);
-			Workbook wb = new XSSFWorkbook(fin);
+			wb = new XSSFWorkbook(fin);
 			Sheet sheet = wb.getSheet(sheetname);
 			Cell cell = sheet.getRow(rownum).getCell(cellnum);
 			if (cell == null) {
@@ -704,7 +706,7 @@ public class OBase {
 
 			FileInputStream fin = new FileInputStream(f);
 			ZipSecureFile.setMinInflateRatio(0.006);
-			Workbook wb = new XSSFWorkbook(fin);
+			wb = new XSSFWorkbook(fin);
 			Sheet sheet = wb.getSheet(sheetname);
 			CellStyle pass = wb.createCellStyle();
 			pass.setFillForegroundColor(IndexedColors.GREEN.getIndex());
@@ -766,7 +768,7 @@ public class OBase {
 
 		File f = new File(System.getProperty("user.dir") + "\\Datas\\" + fileName + ".xlsx");
 		FileInputStream fin = new FileInputStream(f);
-		Workbook wb = new XSSFWorkbook(fin);
+		wb = new XSSFWorkbook(fin);
 		Sheet sheet = wb.getSheet(sheetname);
 		int physicalNumberOfRows = sheet.getPhysicalNumberOfRows();
 		int passcount = 0;
@@ -802,7 +804,7 @@ public class OBase {
 
 		File f = new File(System.getProperty("user.dir") + "\\Datas\\" + fileName + ".xlsx");
 		FileInputStream fin = new FileInputStream(f);
-		Workbook wb = new XSSFWorkbook(fin);
+		wb = new XSSFWorkbook(fin);
 		Sheet sheet = wb.getSheet(sheetname);
 		int physicalNumberOfRows = sheet.getPhysicalNumberOfRows();
 		int passcount = 0;

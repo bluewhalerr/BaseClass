@@ -54,6 +54,11 @@ public class BaseClass {
 	public static void inputValueElement(WebElement element, String value) {
 		element.sendKeys(value);
 	}
+	
+	//Method Creation for Clearing the input
+	public static void inputClear(WebElement ele) {
+	ele.clear();
+	}
 
 	// Method Creation for navigating to the URL
 	public static WebDriver getUrl(String url) {
@@ -150,10 +155,10 @@ public class BaseClass {
 	}
 
 	// Method Creation to perform action-MoveToElement
-//	public static void mouseHovering(WebElement ele) {
-//		action = new Actions(driver);
-//		action.moveToElement(ele).build().perform();
-//	}
+	public static void mouseHovering(WebElement ele) {
+		action = new Actions(driver);
+		action.moveToElement(ele).build().perform();
+	}
 
 	// Method Creation to perform action-Drag&Drop---Method(1)
 	public static void dragAndDrop(WebElement from, WebElement to) {
