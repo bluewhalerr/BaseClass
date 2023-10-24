@@ -1,0 +1,8 @@
+1242
+<<<<<<< HEAD
+sjdffu
+fksa
+=======
+dsohfosdoif
+mainchange
+>>>>>>> news
